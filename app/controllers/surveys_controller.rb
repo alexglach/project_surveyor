@@ -12,7 +12,7 @@ class SurveysController < ApplicationController
     @survey = Survey.new(survey_params)
     if @survey.save
       flash[:success] = "Your survey has been created!"
-      redirect_to @survey
+      redirect_to edit_survey_path(@survey.id)
     else
       flash.now[:danger] = "Your survey could not be created :("
       render :new
@@ -29,9 +29,11 @@ class SurveysController < ApplicationController
 
   def update
     @survey = Survey.find(params[:id])
-    if @survey.update(survey_params)
+    Survey.create_mc_responses(params)
+    Survey.create_range_responses(params)
+    if @survey.update!(survey_params)
       flash[:success] = "Your survey has been updated!"
-      redirect_to @survey
+      redirect_to surveys_path
     else
       flash.now[:danger] = "Your survey could not be updated :("
       render :edit
@@ -51,7 +53,11 @@ class SurveysController < ApplicationController
   private
 
   def survey_params
+
     params.require(:survey).permit(:title, :description)
   end
 
 end
+
+      # {:multiple_choice_questions_attributes => [:id, :responses]}, 
+      # {:range_questions_attributes => [:id, :responses]}

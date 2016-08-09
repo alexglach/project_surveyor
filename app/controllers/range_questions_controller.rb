@@ -57,7 +57,7 @@ class RangeQuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:range_question).permit(:question_text, :range_min, :range_max, :step, :required, :survey_id)
+    params.require(:range_question).permit(:question_text, :range_min, :range_max, :step, :required, :survey_id, :responses => [:id, :answer])
   end
 
 end

@@ -1,5 +1,5 @@
 
-<%= link_to "Back to Survey", survey_path(@survey.id), class: "btn btn-primary btn-xs" %>
+<%= link_to "Back to Survey", edit_survey_path(@survey.id), class: "btn btn-primary btn-xs" %>
 <br>
 <h1>New Multiple Choice Question</h1>
 <%= form_for [@survey, @multiple_choice_question] do |question_fields| %>

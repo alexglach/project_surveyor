@@ -45,6 +45,20 @@ Options
 belongs_to: multiple_choice_question
 
 
+Responses
+  polymorphic to multiple choice and to range question
+
+
+Question.fields_for :responses do |response_field|
+  if question is multiple choice
+  
+
+
+Override responses= method for MCQ and RQ
+  
+
+Did the class methods succeed -- if not you can return why on the survey options
+
 
 
 

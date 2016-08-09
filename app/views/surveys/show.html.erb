@@ -1,22 +1,24 @@
 <h1>Title: <%= @survey.title %></h1>
 <h2>Description: <%= @survey.description %></h2>
-<%= link_to "Add Number Range Question", new_survey_range_question_path(@survey.id), class: "btn btn-success" %>
-<%= link_to "Add Multiple Choice Question", new_survey_multiple_choice_question_path(@survey.id), class: "btn btn-success" %>
 
 <h2>Questions</h2>
-<ul>
-  <% @survey.multiple_choice_questions.each do |question| %>
-    <li>
-      <%= question.question_text %>
-      <%= link_to "Edit Question", edit_multiple_choice_question_path(question.id), class: "btn btn-primary btn-xs" %>
-      <%= link_to "Delete Question", multiple_choice_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
-    </li>
-  <% end %>
-  <% @survey.range_questions.each do |question| %>
-    <li>
-      <%= question.question_text %>
-      <%= link_to "Edit Question", edit_range_question_path(question.id), class: "btn btn-primary btn-xs" %>
-      <%= link_to "Delete Question", range_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
-    </li>
-  <% end %>
-</ul>
+<%= form_for @survey do |survey_fields| %>
+  <ul>
+      <%= survey_fields.fields_for :multiple_choice_questions do |question_field| %>
+        <%= question_field.object.question_text %>
+        <%= question_field.collection_check_boxes(
+                            :responses,
+                            question_field.object.options,
+                            :answer,
+                            :answer
+                            )
+                            %>
+        <br>
+      <% end %>
+  <%= survey_fields.fields_for :range_questions do |question_field| %>
+        <%= question_field.object.question_text %>between <%= question_field.object.range_min %> and <%= question_field.object.range_max %>
+        <%= question_field.number_field :responses, min: question_field.object.range_min, max: question_field.object.range_max %>
+      <% end %>
+  </ul>
+  <%= survey_fields.submit "Submit survey"%>
+<% end %>

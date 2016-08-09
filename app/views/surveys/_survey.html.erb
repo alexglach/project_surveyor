@@ -1,5 +1,6 @@
 <li>
   <%= survey.title %>
+  <%= link_to "Take Survey", survey_path(survey), class: "btn btn-success btn-xs" %>
   <%= link_to "Edit Survey", edit_survey_path(survey), class: "btn btn-primary btn-xs" %>
   <%= link_to "Delete Survey", survey_path(survey), class: "btn btn-danger btn-xs", method: :delete %>
 </li>

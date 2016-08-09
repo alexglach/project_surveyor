@@ -15,10 +15,10 @@ class MultipleChoiceQuestionsController < ApplicationController
     @survey = Survey.find(params[:survey_id])
     @multiple_choice_question = MultipleChoiceQuestion.new(question_params)
     if @multiple_choice_question.save!
-      flash[:success] = "Your range question has been created!"
-      redirect_to redirect_to edit_multiple_choice_question_path(@multiple_choice_question.id)
+      flash[:success] = "Your multiple choice question has been created!"
+      redirect_to edit_multiple_choice_question_path(@multiple_choice_question.id)
     else
-      flash.now[:danger] = "Your range question could not be created :("
+      flash.now[:danger] = "Your multiple choice question could not be created :("
       render :new
     end
   end
@@ -48,9 +48,10 @@ class MultipleChoiceQuestionsController < ApplicationController
   
   def destroy
     @multiple_choice_question = MultipleChoiceQuestion.find(params[:id])
+    @survey = Survey.find(@multiple_choice_question.survey_id)
     if @multiple_choice_question.destroy
       flash[:success] = "Your question has been destroyed!"
-      redirect_to surveys_path
+      redirect_to survey_path(@survey.id)
     else
       render :show
     end
@@ -59,6 +60,6 @@ class MultipleChoiceQuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:multiple_choice_question).permit(:question_text, :required, :one_answer, :survey_id, :options_attributes => [:id, :answer, :multiple_choice_question_id, :_destroy])
+    params.require(:multiple_choice_question).permit(:question_text, :required, :one_answer, :survey_id, :responses => [:id, :answer], :options_attributes => [:id, :answer, :multiple_choice_question_id, :_destroy])
   end
 end

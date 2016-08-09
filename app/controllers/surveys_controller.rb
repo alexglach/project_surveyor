@@ -8,6 +8,12 @@ class SurveysController < ApplicationController
     @survey = Survey.new
   end
 
+  def dashboard
+    @survey = Survey.find(params[:id])
+    @mc_questions = @survey.get_mc_summary
+    @range_questions = @survey.get_range_summary
+  end
+
   def create
     @survey = Survey.new(survey_params)
     if @survey.save
@@ -59,5 +65,3 @@ class SurveysController < ApplicationController
 
 end
 
-      # {:multiple_choice_questions_attributes => [:id, :responses]}, 
-      # {:range_questions_attributes => [:id, :responses]}

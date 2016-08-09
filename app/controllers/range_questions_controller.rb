@@ -15,7 +15,7 @@ class RangeQuestionsController < ApplicationController
     @range_question = RangeQuestion.new(question_params)
     if @range_question.save!
       flash[:success] = "Your range question has been created!"
-      redirect_to survey_path(@survey.id)
+      redirect_to edit_survey_path(@survey.id)
     else
       flash.now[:danger] = "Your range question could not be created :("
       render :new
@@ -46,9 +46,10 @@ class RangeQuestionsController < ApplicationController
   
   def destroy
     @range_question = RangeQuestion.find(params[:id])
+    @survey = Survey.find(@multiple_choice_question.survey_id)
     if @range_question.destroy
       flash[:success] = "Your question has been destroyed!"
-      redirect_to surveys_path
+      redirect_to edit_survey_path(@survey.id)
     else
       render :show
     end

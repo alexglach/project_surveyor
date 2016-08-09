@@ -1,0 +1,46 @@
+<h1><%= @survey.title %></h1>
+<h2><%= @survey.description %></h2>
+
+<% @mc_questions.each do |question| %>
+ <h3><%= question["question_text"] %></h3>
+ <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <tr>
+        <th>Answer</th>
+        <th>Count</th>
+      </tr>
+      <% question["response_counts"].each_pair do |key, value| %>
+        <tr>
+          <td> 
+          <%= key %> 
+          </td>
+          <td>
+          <%= value %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+
+<% @range_questions.each do |question| %>
+ <h3><%= question["question_text"] %></h3>
+ <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <tr>
+        <th>Answer</th>
+        <th>Count</th>
+      </tr>
+      <% question["response_counts"].each_pair do |key, value| %>
+        <tr>
+          <td> 
+          <%= key %> 
+          </td>
+          <td>
+          <%= value %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

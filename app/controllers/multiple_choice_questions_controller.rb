@@ -51,7 +51,7 @@ class MultipleChoiceQuestionsController < ApplicationController
     @survey = Survey.find(@multiple_choice_question.survey_id)
     if @multiple_choice_question.destroy
       flash[:success] = "Your question has been destroyed!"
-      redirect_to survey_path(@survey.id)
+      redirect_to edit_survey_path(@survey.id)
     else
       render :show
     end

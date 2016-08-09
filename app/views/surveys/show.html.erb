@@ -1,19 +1,32 @@
-<h1>Title: <%= @survey.title %></h1>
-<h2>Description: <%= @survey.description %></h2>
+<h1><%= @survey.title %></h1>
+<h2><%= @survey.description %></h2>
 
 <h2>Questions</h2>
 <%= form_for @survey do |survey_fields| %>
   <ul>
       <%= survey_fields.fields_for :multiple_choice_questions do |question_field| %>
         <%= question_field.object.question_text %>
+        <% if question_field.object.one_answer == true %>
         <%= question_field.collection_check_boxes(
                             :responses,
                             question_field.object.options,
                             :answer,
-                            :answer
+                            :answer,
+                            options = {:required => true}
+                            )
+                            %>
+                            <br>
+        <% else %>
+        <%= question_field.collection_radio_buttons(
+                            :responses,
+                            question_field.object.options,
+                            :answer,
+                            :answer,
+                            options = {:required => true}
                             )
                             %>
         <br>
+        <% end %>
       <% end %>
   <%= survey_fields.fields_for :range_questions do |question_field| %>
         <%= question_field.object.question_text %>between <%= question_field.object.range_min %> and <%= question_field.object.range_max %>

@@ -14,6 +14,9 @@ class MultipleChoiceQuestion < ApplicationRecord
 
 
 
+  
+
+
   def self.create_mc_responses(params)
     params.each do |new_response|
       question = MultipleChoiceQuestion.find(new_response[1]["id"]) 

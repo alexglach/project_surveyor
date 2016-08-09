@@ -16,7 +16,7 @@ class MultipleChoiceQuestionsController < ApplicationController
     @multiple_choice_question = MultipleChoiceQuestion.new(question_params)
     if @multiple_choice_question.save!
       flash[:success] = "Your range question has been created!"
-      redirect_to survey_path(@survey.id)
+      redirect_to redirect_to edit_multiple_choice_question_path(@multiple_choice_question.id)
     else
       flash.now[:danger] = "Your range question could not be created :("
       render :new
@@ -24,22 +24,22 @@ class MultipleChoiceQuestionsController < ApplicationController
   end
 
   def show
-    @survey = Survey.find(params[:survey_id])
     @multiple_choice_question = MultipleChoiceQuestion.find(params[:id])
+    @survey = Survey.find(@multiple_choice_question.survey_id)
   end
 
   def edit
-    @survey = Survey.find(params[:survey_id])
     @multiple_choice_question = MultipleChoiceQuestion.find(params[:id])
-    @mulitple_choice_question.options.build
+    @survey = Survey.find(@multiple_choice_question.survey_id)
+    @multiple_choice_question.options.build
   end
 
   def update
-    @survey = Survey.find(params[:survey_id])
     @multiple_choice_question = MultipleChoiceQuestion.find(params[:id])
+    @survey = Survey.find(@multiple_choice_question.survey_id)
     if @multiple_choice_question.update(question_params)
       flash[:success] = "Your question has been updated!"
-      redirect_to survey_path(@survey.id)
+      redirect_to edit_multiple_choice_question_path(@multiple_choice_question.id)
     else
       flash.now[:danger] = "Your question could not be updated :("
       render :edit
@@ -59,6 +59,6 @@ class MultipleChoiceQuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:multiple_choice_question).permit(:question_text, :required, :one_answer, :survey_id, :options_attributes => [:text])
+    params.require(:multiple_choice_question).permit(:question_text, :required, :one_answer, :survey_id, :options_attributes => [:id, :answer, :multiple_choice_question_id, :_destroy])
   end
 end

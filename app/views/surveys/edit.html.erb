@@ -3,5 +3,24 @@
 
 <%= render partial: "form", locals: { btn_label: "Update" } %>
 
+<h2>Questions</h2>
+<ul>
+  <% @survey.multiple_choice_questions.each do |question| %>
+    <li>
+      <%= question.question_text %>
+      <%= link_to "Edit Question", edit_multiple_choice_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", multiple_choice_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
+    </li>
+  <% end %>
+  <% @survey.range_questions.each do |question| %>
+    <li>
+      <%= question.question_text %>
+      <%= link_to "Edit Question", edit_range_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", range_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
+    </li>
+  <% end %>
+</ul>
+
+
 <%= link_to "Add Number Range Question", new_survey_range_question_path(@survey.id), class: "btn btn-success" %>
 <%= link_to "Add Multiple Choice Question", new_survey_multiple_choice_question_path(@survey.id), class: "btn btn-success" %>

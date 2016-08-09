@@ -8,11 +8,15 @@
   <% @survey.multiple_choice_questions.each do |question| %>
     <li>
       <%= question.question_text %>
+      <%= link_to "Edit Question", edit_multiple_choice_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", multiple_choice_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
     </li>
   <% end %>
   <% @survey.range_questions.each do |question| %>
     <li>
       <%= question.question_text %>
+      <%= link_to "Edit Question", edit_range_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", range_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
     </li>
   <% end %>
 </ul>

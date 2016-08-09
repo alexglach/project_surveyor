@@ -23,18 +23,18 @@ class RangeQuestionsController < ApplicationController
   end
 
   def show
-    @survey = Survey.find(params[:survey_id])
     @range_question = RangeQuestion.find(params[:id])
+    @survey = Survey.find(@range_question.survey_id)
   end
 
   def edit
-    @survey = Survey.find(params[:survey_id])
     @range_question = RangeQuestion.find(params[:id])
+    @survey = Survey.find(@range_question.survey_id)
   end
 
   def update
-    @survey = Survey.find(params[:survey_id])
     @range_question = RangeQuestion.find(params[:id])
+    @survey = Survey.find(@range_question.survey_id)
     if @range_question.update(question_params)
       flash[:success] = "Your question has been updated!"
       redirect_to survey_path(@survey.id)

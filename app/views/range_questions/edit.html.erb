@@ -1,7 +1,8 @@
+<%= link_to "Back to Survey", survey_path(@survey.id), class: "btn btn-primary btn-xs" %>
+<br>
 <h1>Edit Range Question</h1>
-<%= form_for [@survey, @range_question] do |question_fields| %>
+<%= form_for [@range_question] do |question_fields| %>
 
-  <%= question_fields.hidden_field(:survey_id, :value => @survey.id) %>
 
   <%= question_fields.label :question_text %>
   <%= question_fields.text_field :question_text %>
@@ -22,3 +23,21 @@
   <%= question_fields.submit %>
 
 <% end %>
+
+<h2>Current Questions</h2>
+<ul>
+  <% @survey.multiple_choice_questions.each do |question| %>
+    <li>
+      <%= question.question_text %>
+      <%= link_to "Edit Question", edit_multiple_choice_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", multiple_choice_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
+    </li>
+  <% end %>
+  <% @survey.range_questions.each do |question| %>
+    <li>
+      <%= question.question_text %>
+      <%= link_to "Edit Question", edit_range_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", range_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
+    </li>
+  <% end %>
+</ul>

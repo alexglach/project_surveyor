@@ -1,0 +1,61 @@
+<%= link_to "Back to Survey", survey_path(@survey.id), class: "btn btn-primary btn-xs" %>
+<br>
+
+<h1>Edit Multiple Choice Question</h1>
+<%= form_for [@multiple_choice_question] do |question_fields| %>
+
+  <%= question_fields.hidden_field(:survey_id, :value => @survey.id) %>
+  <%= question_fields.label :question_text %>
+  <%= question_fields.text_field :question_text %>
+  <br>
+
+
+  <%= question_fields.label :one_answer %>
+  <%= question_fields.check_box :one_answer%>
+  <br>
+
+  <%= question_fields.label :required %>
+  <%= question_fields.check_box :required%>
+  <br>
+
+  <%= question_fields.submit "Update Question Basics" %>
+
+  <h3> Answers to multiple choice question: </h3>
+
+  <%= question_fields.fields_for :options do |option_fields| %>
+
+    <%= option_fields.label :answer %>
+    <%= option_fields.text_field :answer %>
+
+    <% if option_fields.object.persisted? %>
+      <%= option_fields.label :_destroy, "Delete this answer?" %>
+      <%= option_fields.check_box :_destroy %>
+  <% end %>
+
+    <br>
+
+
+  <% end %>
+  
+
+  <%= question_fields.submit "Update Answers" %>
+
+<% end %>
+
+<h2>Current Questions</h2>
+<ul>
+  <% @survey.multiple_choice_questions.each do |question| %>
+    <li>
+      <%= question.question_text %>
+      <%= link_to "Edit Question", edit_multiple_choice_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", multiple_choice_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
+    </li>
+  <% end %>
+  <% @survey.range_questions.each do |question| %>
+    <li>
+      <%= question.question_text %>
+      <%= link_to "Edit Question", edit_range_question_path(question.id), class: "btn btn-primary btn-xs" %>
+      <%= link_to "Delete Question", range_question_path(question.id), class: "btn btn-danger btn-xs", method: :delete %>
+    </li>
+  <% end %>
+</ul>

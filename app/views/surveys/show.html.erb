@@ -18,6 +18,7 @@
   <%= survey_fields.fields_for :range_questions do |question_field| %>
         <%= question_field.object.question_text %>between <%= question_field.object.range_min %> and <%= question_field.object.range_max %>
         <%= question_field.number_field :responses, min: question_field.object.range_min, max: question_field.object.range_max %>
+        <br>
       <% end %>
   </ul>
   <%= survey_fields.submit "Submit survey"%>

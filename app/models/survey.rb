@@ -11,6 +11,7 @@ class Survey < ApplicationRecord
 
   def self.create_mc_responses(params)
     params = params.to_hash
+    return unless params["survey"].keys.include?("multiple_choice_questions_attributes")
     params["survey"]["multiple_choice_questions_attributes"].each do |new_response|
       next if new_response.nil?
       question = MultipleChoiceQuestion.find(new_response[1]["id"]) 
@@ -24,6 +25,7 @@ class Survey < ApplicationRecord
 
   def self.create_range_responses(params)
     params = params.to_hash
+    return unless params["survey"].keys.include?("range_questions_attributes")
     params["survey"]["range_questions_attributes"].each do |new_response|
       next if new_response[1]["responses"] == ""
       question = RangeQuestion.find(new_response[1]["id"]) 

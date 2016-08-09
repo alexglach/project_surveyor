@@ -28,7 +28,7 @@ Surveys
 has_many: questions
 
 
-Questions
+Multiple Choice Questions
 :type
 :text
 :required, boolean
@@ -36,9 +36,13 @@ has_many: options
 belongs_to: survey
 
 
+
+
+
+
 Options
 :text
-belongs_to: question
+belongs_to: multiple_choice_question
 
 
 

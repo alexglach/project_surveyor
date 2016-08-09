@@ -1,0 +1,21 @@
+<h1>New Multiple Choice Question</h1>
+<%= form_for [@survey, @multiple_choice_question] do |question_fields| %>
+
+  <%= question_fields.hidden_field(:survey_id, :value => @survey.id) %>
+  <%= question_fields.label :question_text %>
+  <%= question_fields.text_field :question_text %>
+  <br>
+
+
+  <%= question_fields.label :one_answer %>
+  <%= question_fields.check_box :one_answer%>
+  <br>
+
+  <%= question_fields.label :required %>
+  <%= question_fields.check_box :required%>
+  <br>
+  
+
+  <%= question_fields.submit %>
+
+<% end %>

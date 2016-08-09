@@ -2,3 +2,6 @@
 
 
 <%= render partial: "form", locals: { btn_label: "Update" } %>
+
+<%= link_to "Add Number Range Question", new_survey_range_question_path(@survey.id), class: "btn btn-success" %>
+<%= link_to "Add Multiple Choice Question", new_survey_multiple_choice_question_path(@survey.id), class: "btn btn-success" %>

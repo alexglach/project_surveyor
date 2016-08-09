@@ -1,0 +1,2 @@
+module RangeQuestionsHelper
+end

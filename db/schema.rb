@@ -10,27 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805210918) do
+ActiveRecord::Schema.define(version: 20160809132704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "options", force: :cascade do |t|
-    t.string   "text"
-    t.integer  "question_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["question_id"], name: "index_options_on_question_id", using: :btree
+  create_table "multiple_choice_questions", force: :cascade do |t|
+    t.boolean  "one_answer"
+    t.text     "question_text"
+    t.integer  "survey_id"
+    t.boolean  "required"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["survey_id"], name: "index_multiple_choice_questions_on_survey_id", using: :btree
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.integer  "type"
-    t.text     "text"
-    t.boolean  "required"
+  create_table "options", force: :cascade do |t|
+    t.string   "answer"
+    t.integer  "multiple_choice_question_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["multiple_choice_question_id"], name: "index_options_on_multiple_choice_question_id", using: :btree
+  end
+
+  create_table "range_questions", force: :cascade do |t|
     t.integer  "survey_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
+    t.string   "range_min"
+    t.string   "range_max"
+    t.string   "step"
+    t.text     "question_text"
+    t.boolean  "required"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["survey_id"], name: "index_range_questions_on_survey_id", using: :btree
   end
 
   create_table "surveys", force: :cascade do |t|
@@ -40,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160805210918) do
     t.datetime "updated_at",  null: false
   end
 
-  add_foreign_key "options", "questions"
-  add_foreign_key "questions", "surveys"
+  add_foreign_key "multiple_choice_questions", "surveys"
+  add_foreign_key "options", "multiple_choice_questions"
+  add_foreign_key "range_questions", "surveys"
 end
